@@ -39,7 +39,7 @@ spec:
         paths:
           - path: {{ default "/" .path }}
             pathType: {{ default "ImplementationSpecific" .pathType }}
-            backend: {{- include "common.ingress.backend" (dict "serviceName" (include "seaweedfs.webdav.fullname" $) "servicePort" ("https" "http" .Values.webdav.tls.enabled) "context" $) | nindent 14 }}
+            backend: {{- include "common.ingress.backend" (dict "serviceName" (include "seaweedfs.webdav.fullname" $) "servicePort" (ternary "https" "http" .Values.webdav.tls.enabled) "context" $) | nindent 14 }}
     {{- end }}
     {{- if .Values.webdav.ingress.extraRules }}
     {{- include "common.tplvalues.render" (dict "value" .Values.webdav.ingress.extraRules "context" $) | nindent 4 }}
